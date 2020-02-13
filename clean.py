@@ -43,11 +43,13 @@ def deletePod(podName, namespace):
 # --- Main --------------------------------------------------------------------
 # Get all pods running in a namespace and delete older than "maxDays"
 pods = getPods(namespace)
+if not pods:
+    print("No pods for delete.")
+
 for pod in pods:
     if pod["status"]["phase"] in podStatus:
         podStartTime = datetime.strptime(pod["status"]["startTime"], "%Y-%m-%dT%H:%M:%SZ")
         todayDate = datetime.today()
         if ((podStartTime + timedelta(days=maxDays)) < todayDate):
             print("Deleting pod ("+pod["metadata"]["name"]+"). Status ("+pod["status"]["phase"]+"). Start time ("+str(podStartTime)+")")
-            #deletePod(pod["metadata"]["name"], namespace)
-
+            deletePod(pod["metadata"]["name"], namespace)
