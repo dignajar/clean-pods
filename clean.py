@@ -23,8 +23,12 @@ maxDays = int(os.environ["MAX_DAYS"])
 # You can send a list of string separate by comma, Ex. "Pending, Running, Succeeded, Failed, Unknown"
 podStatus = os.environ["POD_STATUS"].replace(' ','').split(",")
 
+# Debug level
+debugLevel = os.environ["DEBUG"]
+
 # --- Functions ---------------------------------------------------------------
 def callAPI(url):
+    log(url)
     headers = {"Authorization": "Bearer "+token}
     requests.packages.urllib3.disable_warnings()
     request = requests.get(url, headers=headers, verify=False)
@@ -40,7 +44,16 @@ def deletePod(podName, namespace):
     response = callAPI(url)
     return response
 
+def log(message):
+    if (debugLevel == "INFO"):
+        print(message)
+
 # --- Main --------------------------------------------------------------------
+log("API_URL: "+apiURL)
+log("TOKEN: "+token)
+log("NAMESPACE: "+namespace)
+log("POD_STATUS: "+podStatus)
+
 # Get all pods running in a namespace and delete older than "maxDays"
 pods = getPods(namespace)
 for pod in pods:
