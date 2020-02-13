@@ -25,7 +25,6 @@ podStatus = os.environ["POD_STATUS"].replace(' ','').split(",")
 
 # --- Functions ---------------------------------------------------------------
 def callAPI(url):
-    log(url)
     headers = {"Authorization": "Bearer "+token}
     requests.packages.urllib3.disable_warnings()
     request = requests.get(url, headers=headers, verify=False)
