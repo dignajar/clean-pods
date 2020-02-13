@@ -10,7 +10,7 @@ if os.path.exists("/var/run/secrets/kubernetes.io/serviceaccount"):
 else:
     token = os.environ["TOKEN"]
 
-# API URL. Ex. https://kubernetes.default.svc
+# API URL. Ex. https://kubernetes.default.svc/api/
 apiURL = os.environ["API_URL"]
 
 # Namespace where the pods are running
@@ -22,9 +22,6 @@ maxDays = int(os.environ["MAX_DAYS"])
 # Only pods with the following status are going to be deleted
 # You can send a list of string separate by comma, Ex. "Pending, Running, Succeeded, Failed, Unknown"
 podStatus = os.environ["POD_STATUS"].replace(' ','').split(",")
-
-# Debug level
-debugLevel = os.environ["DEBUG"]
 
 # --- Functions ---------------------------------------------------------------
 def callAPI(url):
@@ -44,16 +41,7 @@ def deletePod(podName, namespace):
     response = callAPI(url)
     return response
 
-def log(message):
-    if (debugLevel == "INFO"):
-        print(message)
-
 # --- Main --------------------------------------------------------------------
-log("API_URL: "+apiURL)
-log("TOKEN: "+token)
-log("NAMESPACE: "+namespace)
-log("POD_STATUS: "+podStatus)
-
 # Get all pods running in a namespace and delete older than "maxDays"
 pods = getPods(namespace)
 for pod in pods:
