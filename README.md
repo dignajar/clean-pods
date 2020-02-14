@@ -1,7 +1,7 @@
 # Kubernetes: Clean pods older than X days
 Delete pods older than X days. The python script uses the `Kubernetes API` and the `TOKEN` from a service account to calculate and delete pods older than X days.
 
-I use this Docker for clean up the pods created by Airflow (Kubernetes Operator), when Airflow deploys a pod the pod get the status `Completed` or `Error` and is not delete after complete the task, also I don't want to delete them at the end of the execution because we lost the logs, so I clean up the namespace every day and delete the pods older than 5 days after the creation time.
+I use this Docker for clean up the pods created by Airflow (Kubernetes Operator), when Airflow deploys a pod the pod get the status `Completed` or `Error` and is not delete after complete the task, also I don't want to delete them at the end of the execution because we lost the logs, so execute this Docker as a cronjob every day (at 2am) and delete the pods older than 5 days after the creation time.
 
 ## Pod status
 The pods can get the following status:
