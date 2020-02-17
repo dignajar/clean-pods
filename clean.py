@@ -24,20 +24,20 @@ maxDays = int(os.environ["MAX_DAYS"])
 podStatus = os.environ["POD_STATUS"].replace(' ','').split(",")
 
 # --- Functions ---------------------------------------------------------------
-def callAPI(url):
+def callAPI(method, url):
     headers = {"Authorization": "Bearer "+token}
     requests.packages.urllib3.disable_warnings()
-    request = requests.get(url, headers=headers, verify=False)
+    request = requests.request(method, url, headers=headers, verify=False)
     return request.json()
 
 def getPods(namespace):
     url = apiURL+"v1/namespaces/"+namespace+"/pods"
-    response = callAPI(url)
+    response = callAPI('GET', url)
     return response["items"]
 
 def deletePod(podName, namespace):
     url = apiURL+"v1/namespaces/"+namespace+"/pods/"+podName
-    response = callAPI(url)
+    response = callAPI('DELETE', url)
     return response
 
 # --- Main --------------------------------------------------------------------
