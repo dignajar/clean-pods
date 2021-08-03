@@ -39,7 +39,7 @@ spec:
           containers:
           - name: clean-pods
             imagePullPolicy: Always
-            image: docker.ocean.pmicloud.biz/dignajar/clean-pods:latest
+            image: dignajar/clean-pods:latest
             env:
               - name: API_URL
                 value: "https://kubernetes.default.svc/api/"
