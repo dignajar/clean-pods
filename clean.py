@@ -17,7 +17,7 @@ apiURL = os.environ["API_URL"]
 namespace = os.environ["NAMESPACE"]
 
 # Expiration time in days, the pods older than "maxDays" are going to be deleted
-maxDays = int(os.environ["MAX_DAYS"])
+maxDays = float(os.environ["MAX_DAYS"])
 
 # Only pods with the following status are going to be deleted
 # You can send a list of string separate by comma, Ex. "Pending, Running, Succeeded, Failed, Unknown"
